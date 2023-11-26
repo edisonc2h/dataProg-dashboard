@@ -1,4 +1,4 @@
-FROM node:latest
+FROM edisonc2h/dasboard
 WORKDIR /app
 COPY package.json /app
 RUN npm install -g npm@10.2.4
