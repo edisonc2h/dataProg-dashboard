@@ -1,6 +1,23 @@
 export const navigations = [
-  { name: 'Dashboard', path: '/dashboard/default', icon: 'dashboard' },
-  { label: 'PAGES', type: 'label' },
+  { name: 'INICIO', path: '/dashboard/default', icon: 'home' },
+  {
+    name: 'ADMINISTRADOR',
+    icon: 'settings_suggest',
+    children: [],
+  },
+  {
+    name: 'PORTAL',
+    icon: 'dashboard',
+    children: [],
+  },
+  {
+    name: 'CONSULTAS',
+    icon: 'list',
+    children: [],
+  },
+  { name: 'DESCARGA', path: '/download', icon: 'download' },
+  { name: 'CONSULTA SB', path: '/consulta_sb', icon: 'search' },
+  { name: 'CONSULTA SEPS', path: '/consulta_seps', icon: 'search' },
   {
     name: 'Session/Auth',
     icon: 'security',
