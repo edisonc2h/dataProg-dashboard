@@ -23,25 +23,6 @@ const errorColor = {
 };
 
 export const themeColors = {
-  whitePurple: {
-    palette: {
-      type: 'light',
-      primary: {
-        main: '#ffffff',
-        contrastText: textLight.primary,
-      },
-      secondary: {
-        main: '#7467ef',
-        contrastText: '#ffffff',
-      },
-      background: {
-        paper: '#fff',
-        default: '#fafafa',
-      },
-      error: errorColor,
-      text: textLight,
-    },
-  },
   whiteBlue: {
     palette: {
       type: 'light',
@@ -98,79 +79,6 @@ export const themeColors = {
       text: textDark,
     },
   },
-  purple1: {
-    palette: {
-      type: 'light',
-      primary: {
-        main: '#7467ef',
-        contrastText: '#ffffff',
-      },
-      secondary: secondaryColor,
-      error: errorColor,
-      background: {
-        paper: '#fff',
-        default: '#fafafa',
-      },
-      text: textLight,
-    },
-  },
-  purple2: {
-    palette: {
-      type: 'light',
-      primary: {
-        main: '#6a75c9',
-        contrastText: '#ffffff',
-      },
-      secondary: {
-        main: '#ff9e43',
-        contrastText: textLight.primary,
-      },
-      error: errorColor,
-      background: {
-        paper: '#fff',
-        default: '#fafafa',
-      },
-      text: textLight,
-    },
-  },
-  purpleDark1: {
-    palette: {
-      type: 'dark',
-      primary: {
-        main: '#7467ef',
-        contrastText: '#ffffff',
-      },
-      secondary: {
-        main: '#ff9e43',
-        contrastText: textLight.primary,
-      },
-      error: errorColor,
-      background: {
-        paper: '#222A45',
-        default: '#1a2038',
-      },
-      text: textDark,
-    },
-  },
-  purpleDark2: {
-    palette: {
-      type: 'dark',
-      primary: {
-        main: '#6a75c9',
-        contrastText: '#ffffff',
-      },
-      secondary: {
-        main: '#ff9e43',
-        contrastText: textLight.primary,
-      },
-      error: errorColor,
-      background: {
-        paper: '#222A45',
-        default: '#1a2038',
-      },
-      text: textDark,
-    },
-  },
   blue: {
     palette: {
       type: 'light',
@@ -209,11 +117,11 @@ export const themeColors = {
       text: textDark,
     },
   },
-  red: {
+  yellow: {
     palette: {
       type: 'dark',
       primary: {
-        main: '#e53935',
+        main: '#FFAF38',
         contrastText: '#ffffff',
       },
       secondary: {

@@ -42,7 +42,7 @@ const Footer = () => {
           <FooterContent>
             <Span sx={{ m: 'auto' }}></Span>
             <Paragraph sx={{ m: 0 }}>
-              Design and Developed by <a href="https://www.codedesign.ec/" target="_blank" rel="noreferrer">Codedesing S.A.</a>
+              Design and Developed by <a href="https://www.codedesign.ec/" target="_blank" rel="noreferrer">Codedesign S.A.</a>
             </Paragraph>
           </FooterContent>
         </AppFooter>
