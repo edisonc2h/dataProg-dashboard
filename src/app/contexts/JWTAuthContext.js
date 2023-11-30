@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }) => {
             email,
             password,
         })
+        console.log(response)
         const { accessToken, user } = response.data
 
         setSession(accessToken)

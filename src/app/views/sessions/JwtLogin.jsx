@@ -4,9 +4,15 @@ import { Box, styled, useTheme } from '@mui/system';
 import { Paragraph } from 'app/components/Typography';
 import useAuth from 'app/hooks/useAuth';
 import { Formik } from 'formik';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const FlexBox = styled(Box)(() => ({ display: 'flex', alignItems: 'center' }));
 
@@ -52,6 +58,15 @@ const JwtLogin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const [openMessage, setOpenMessage] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenMessage(false);
+  };
+
   const { login } = useAuth();
 
   const handleFormSubmit = async (values) => {
@@ -61,6 +76,7 @@ const JwtLogin = () => {
       navigate('/');
     } catch (e) {
       setLoading(false);
+      setOpenMessage(true);
     }
   };
 
@@ -125,13 +141,6 @@ const JwtLogin = () => {
 
                         <Paragraph>Remember Me</Paragraph>
                       </FlexBox>
-
-                      <NavLink
-                        to="/session/forgot-password"
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        Forgot password?
-                      </NavLink>
                     </FlexBox>
 
                     <LoadingButton
@@ -146,6 +155,11 @@ const JwtLogin = () => {
                   </form>
                 )}
               </Formik>
+              <Snackbar open={openMessage} vertical="top" horizontal="right" autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  Usuario y/o contraseña incorrectas!
+                </Alert>
+              </Snackbar>
             </ContentBox>
           </Grid>
         </Grid>
