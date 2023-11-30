@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useReducer } from 'react'
-import jwtDecode from 'jwt-decode'
 import axios from 'axios.js'
 import { MatxLoading } from 'app/components'
 
@@ -9,16 +8,6 @@ const initialState = {
     user: null,
 }
 
-const isValidToken = (accessToken) => {
-    if (!accessToken) {
-        return false
-    }
-
-    const decodedToken = jwtDecode(accessToken)
-    const currentTime = Date.now() / 1000
-    return decodedToken.exp > currentTime
-}
-
 const setSession = (accessToken) => {
     if (accessToken) {
         localStorage.setItem('accessToken', accessToken)
@@ -26,6 +15,15 @@ const setSession = (accessToken) => {
     } else {
         localStorage.removeItem('accessToken')
         delete axios.defaults.headers.common.Authorization
+    }
+}
+
+const setUserSession = (user) => {
+    if (user) {
+        localStorage.setItem('user', JSON.stringify(user))
+    } else {
+        localStorage.removeItem('user')
+    
     }
 }
 
@@ -57,15 +55,6 @@ const reducer = (state, action) => {
                 user: null,
             }
         }
-        case 'REGISTER': {
-            const { user } = action.payload
-
-            return {
-                ...state,
-                isAuthenticated: true,
-                user,
-            }
-        }
         default: {
             return { ...state }
         }
@@ -77,7 +66,6 @@ const AuthContext = createContext({
     method: 'JWT',
     login: () => Promise.resolve(),
     logout: () => { },
-    register: () => Promise.resolve(),
 })
 
 export const AuthProvider = ({ children }) => {
@@ -88,11 +76,10 @@ export const AuthProvider = ({ children }) => {
             email,
             password,
         })
-
-        console.log(response.data)
         const { accessToken, user } = response.data
 
         setSession(accessToken)
+        setUserSession(user) 
 
         dispatch({
             type: 'LOGIN',
@@ -102,27 +89,9 @@ export const AuthProvider = ({ children }) => {
         })
     }
 
-    const register = async (email, username, password) => {
-        const response = await axios.post('/api/auth/register', {
-            email,
-            username,
-            password,
-        })
-
-        const { accessToken, user } = response.data
-
-        setSession(accessToken)
-
-        dispatch({
-            type: 'REGISTER',
-            payload: {
-                user,
-            },
-        })
-    }
-
     const logout = () => {
         setSession(null)
+        setUserSession(null) 
         dispatch({ type: 'LOGOUT' })
     }
 
@@ -131,16 +100,15 @@ export const AuthProvider = ({ children }) => {
             try {
                 const accessToken = window.localStorage.getItem('accessToken')
 
-                if (accessToken && isValidToken(accessToken)) {
+                if (accessToken) {
                     setSession(accessToken)
-                    const response = await axios.get('/api/auth/profile')
-                    const { user } = response.data
+                    const user = window.localStorage.getItem('user') ?? null
 
                     dispatch({
                         type: 'INIT',
                         payload: {
                             isAuthenticated: true,
-                            user,
+                            user: JSON.parse(user),
                         },
                     })
                 } else {
@@ -153,7 +121,6 @@ export const AuthProvider = ({ children }) => {
                     })
                 }
             } catch (err) {
-                console.error(err)
                 dispatch({
                     type: 'INIT',
                     payload: {
@@ -176,7 +143,6 @@ export const AuthProvider = ({ children }) => {
                 method: 'JWT',
                 login,
                 logout,
-                register,
             }}
         >
             {children}

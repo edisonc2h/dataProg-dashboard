@@ -31,7 +31,6 @@ const AuthGuard = ({ children }) => {
   // // AND COMMENT OUT BELOW authenticated VARIABLE
 
   let authenticated = isAuthenticated;
-
   return (
     <>
       {authenticated ? (

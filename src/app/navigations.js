@@ -4,7 +4,11 @@ export const navigations = [
     name: 'ADMINISTRADOR',
     icon: 'settings_suggest',
     children: [
-      { name: 'Usuarios', iconText: 'SI', path: '/users' },
+      { name: 'Usuarios', iconText: 'SI', path: '/users', icon: 'double_arrow' },
+      { name: 'Perfil', iconText: 'SI', path: '/profile', icon: 'double_arrow' },
+      { name: 'Menú', iconText: 'SI', path: '/menu', icon: 'double_arrow' },
+      { name: 'Perfil - Proceso', iconText: 'SI', path: '/profile-process', icon: 'double_arrow' },
+      { name: 'Usuario - Perfil', iconText: 'SI', path: '/user-profile', icon: 'double_arrow' },
     ],
   },
   {
