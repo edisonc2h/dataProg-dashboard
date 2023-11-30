@@ -1,5 +1,6 @@
 import AuthGuard from 'app/auth/AuthGuard';
 import dashboardRoutes from 'app/views/dashboard/DashboardRoutes';
+import usersRoutes from 'app/views/users/UsersRoutes';
 import NotFound from 'app/views/sessions/NotFound';
 import sessionRoutes from 'app/views/sessions/SessionRoutes';
 import { Navigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ const routes = [
         <MatxLayout />
       </AuthGuard>
     ),
-    children: [...dashboardRoutes],
+    children: [...dashboardRoutes, ...usersRoutes],
   },
   ...sessionRoutes,
   { path: '/', element: <Navigate to="dashboard/default" /> },

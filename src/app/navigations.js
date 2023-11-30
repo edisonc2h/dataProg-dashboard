@@ -3,7 +3,9 @@ export const navigations = [
   {
     name: 'ADMINISTRADOR',
     icon: 'settings_suggest',
-    children: [],
+    children: [
+      { name: 'Usuarios', iconText: 'SI', path: '/users' },
+    ],
   },
   {
     name: 'PORTAL',

@@ -84,10 +84,12 @@ export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
     const login = async (email, password) => {
-        const response = await axios.post('/api/auth/login', {
+        const response = await axios.post('http://127.0.0.1/api/login', {
             email,
             password,
         })
+
+        console.log(response.data)
         const { accessToken, user } = response.data
 
         setSession(accessToken)
