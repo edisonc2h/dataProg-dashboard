@@ -10,7 +10,8 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios.js'
 
 const StyledTable = styled(Table)(() => ({
   whiteSpace: "pre",
@@ -22,18 +23,7 @@ const StyledTable = styled(Table)(() => ({
   },
 }));
 
-const subscribarList = [
-  {
-    username: "admin",
-    name: "Administrador",
-    lastname: ".",
-    documentNumber: "21324322",
-    financialInstitution: 'Banco Pichincha',
-    status: 'Activo'
-  }
-];
-
-const PaginationTable = () => {
+const UsersSummary = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -45,6 +35,17 @@ const PaginationTable = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const [usersList, setListUsers] = useState([]);
+
+  useEffect(()=>{
+    getUsers();
+  },[]);
+
+const getUsers = async () => {
+  const response = await axios.get('http://127.0.0.1/api/users')
+  setListUsers(response.data?.data)
+}
 
   return (
     <Box width="100%" overflow="auto">
@@ -61,8 +62,7 @@ const PaginationTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {subscribarList
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          {usersList?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((subscriber, index) => (
               <TableRow key={index}>
                 <TableCell align="left">{index}</TableCell>
@@ -72,6 +72,9 @@ const PaginationTable = () => {
                 <TableCell align="center">{subscriber.financialInstitution}</TableCell>
                 <TableCell align="center">{subscriber.status}</TableCell>
                 <TableCell align="right">
+                <IconButton>
+                    <Icon color="">edit</Icon>
+                  </IconButton>
                   <IconButton>
                     <Icon color="error">close</Icon>
                   </IconButton>
@@ -86,7 +89,7 @@ const PaginationTable = () => {
         page={page}
         component="div"
         rowsPerPage={rowsPerPage}
-        count={subscribarList.length}
+        count={usersList?.length}
         onPageChange={handleChangePage}
         rowsPerPageOptions={[5, 10, 25]}
         onRowsPerPageChange={handleChangeRowsPerPage}
@@ -97,4 +100,4 @@ const PaginationTable = () => {
   );
 };
 
-export default PaginationTable;
+export default UsersSummary;

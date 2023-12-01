@@ -76,8 +76,8 @@ export const AuthProvider = ({ children }) => {
             email,
             password,
         })
-        console.log(response)
         const { accessToken, user } = response.data
+        user.role = 'SA';
 
         setSession(accessToken)
         setUserSession(user) 

@@ -1,6 +1,6 @@
 import { Box, styled } from "@mui/material";
 import { Breadcrumb, SimpleCard } from "app/components";
-import UsersSummary from "./UsersSummary";
+import ProfilesSummary from "./ProfilesSummary";
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -11,18 +11,18 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const UsersTable = () => {
+const ProfilesTable = () => {
   return (
     <Container>
       <Box className="breadcrumb">
-        <Breadcrumb routeSegments={[{ name: "Listado", path: "/users" }, { name: "Usuarios" }]} />
+        <Breadcrumb routeSegments={[{ name: "Listado", path: "/profiles" }, { name: "Perfiles" }]} />
       </Box>
 
-      <SimpleCard title="Lista de Usuarios">
-        <UsersSummary />
+      <SimpleCard title="Lista de Perfiles">
+        <ProfilesSummary />
       </SimpleCard>
     </Container>
   );
 };
 
-export default UsersTable;
+export default ProfilesTable;

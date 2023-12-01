@@ -1,36 +1,40 @@
 import useAuth from 'app/hooks/useAuth';
-// import { flat } from 'app/utils/utils';
+import { flat } from 'app/utils/utils';
 import { Navigate, useLocation } from 'react-router-dom';
-// import AllPages from '../routes';
+import AllPages from '../routes';
 
-// const userHasPermission = (pathname, user, routes) => {
-//   if (!user) {
-//     return false;
-//   }
-//   const matched = routes.find((r) => r.path === pathname);
+const userHasPermission = (pathname, user, routes) => {
+  if (!user) {
+    return false;
+  }
+  const matched = routes.find((r) => r.path === pathname);
+  console.log(matched)
 
-//   const authenticated =
-//     matched && matched.auth && matched.auth.length ? matched.auth.includes(user.role) : true;
-//   return authenticated;
-// };
+  const authenticated =
+    matched && matched.auth && matched.auth.length ? matched.auth.includes(user.role) : true;
+  return authenticated;
+};
 
 const AuthGuard = ({ children }) => {
   let {
     isAuthenticated,
-    // user
+     user
   } = useAuth();
   const { pathname } = useLocation();
+  console.log(pathname)
+  console.log(user)
 
-  //   const routes = flat(AllPages);
+    const routes = flat(AllPages);
+    console.log(routes)
 
-  //   const hasPermission = userHasPermission(pathname, user, routes);
-  //   let authenticated = isAuthenticated && hasPermission;
+    const hasPermission = userHasPermission(pathname, user, routes);
+    let authenticated = isAuthenticated && hasPermission;
 
   // // IF YOU NEED ROLE BASED AUTHENTICATION,
   // // UNCOMMENT ABOVE LINES
   // // AND COMMENT OUT BELOW authenticated VARIABLE
 
-  let authenticated = isAuthenticated;
+  //let authenticated = isAuthenticated;
   return (
     <>
       {authenticated ? (
