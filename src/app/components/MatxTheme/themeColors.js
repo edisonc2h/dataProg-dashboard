@@ -11,13 +11,6 @@ const textDark = {
   disabled: 'rgba(255, 255, 255, 0.64)',
   hint: 'rgba(255, 255, 255, 0.64)',
 };
-
-const secondaryColor = {
-  light: '#f9a352',
-  main: '#ff9e43',
-  dark: '#ff932e',
-  contrastText: textLight.primary,
-};
 const errorColor = {
   main: '#FF3D57',
 };

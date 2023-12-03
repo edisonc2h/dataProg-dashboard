@@ -72,11 +72,14 @@ const getUsers = async () => {
                 <TableCell align="center">{subscriber.financialInstitution}</TableCell>
                 <TableCell align="center">{subscriber.status}</TableCell>
                 <TableCell align="right">
-                <IconButton>
-                    <Icon color="">edit</Icon>
+                  <IconButton>
+                    <Icon>edit</Icon>
                   </IconButton>
                   <IconButton>
-                    <Icon color="error">close</Icon>
+                    <Icon>password</Icon>
+                  </IconButton>
+                  <IconButton>
+                    <Icon>delete</Icon>
                   </IconButton>
                 </TableCell>
               </TableRow>

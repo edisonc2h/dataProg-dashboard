@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { Card, Fab, Icon } from '@mui/material';
 import { Box, styled } from '@mui/system';
 
 const CardRoot = styled(Card)(() => ({
@@ -16,7 +16,11 @@ const CardTitle = styled('div')(({ subtitle }) => ({
 const SimpleCard = ({ children, title, subtitle, icon }) => {
   return (
     <CardRoot elevation={6}>
-      <CardTitle subtitle={subtitle}>{title}</CardTitle>
+      <CardTitle subtitle={subtitle}>{title}  
+      <Fab size="small" color="primary" aria-label="Add" className="button">
+          <Icon>add</Icon>
+        </Fab> 
+      </CardTitle>
       {subtitle && <Box sx={{ mb: 2 }}>{subtitle}</Box>}
       {children}
     </CardRoot>
