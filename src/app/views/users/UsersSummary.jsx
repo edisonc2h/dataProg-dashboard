@@ -1,6 +1,7 @@
 import {
   Box,
   Icon,
+  Button,
   IconButton,
   styled,
   Table,
@@ -72,7 +73,12 @@ const getUsers = async () => {
                 <TableCell align="center">{subscriber.financialInstitution}</TableCell>
                 <TableCell align="center">{subscriber.status}</TableCell>
                 <TableCell align="right">
-                  <IconButton>
+                <a href={`/users/edit/${subscriber.id}`}>
+                  <Button>
+                  <Icon>edit</Icon>
+                  </Button>
+                </a>
+                  <IconButton >
                     <Icon>edit</Icon>
                   </IconButton>
                   <IconButton>

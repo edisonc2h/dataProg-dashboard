@@ -59,7 +59,7 @@ const SimpleForm = () => {
   const handleSubmit = async (values) => {
     //setLoading(true);
     try {
-        await axios.post('http://127.0.0.1/api/user/save', state)
+        await axios.post('http://127.0.0.1/api/user', state)
         navigate('/users');
     } catch (e) {
       //setLoading(false);
