@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from 'axios.js'
 import { useNavigate, useParams } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
  
 const Container = styled("div")(({ theme }) => ({
     margin: "30px",
@@ -55,6 +56,7 @@ const SimpleForm = () => {
     consultingJudicialOrders: ''
   });
 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() =>{
@@ -69,13 +71,14 @@ const SimpleForm = () => {
   }, [])
 
   const handleSubmit = async (values) => {
-    //setLoading(true);
+    setLoading(true);
     try {
       console.log(state)
         await axios.put('http://127.0.0.1/api/user/' + id, state)
+        setLoading(false);
         navigate('/users');
     } catch (e) {
-      //setLoading(false);
+      setLoading(false);
       //setOpenMessage(true);
     }
   };
@@ -221,10 +224,20 @@ const SimpleForm = () => {
             />
           </Grid>
         </Grid>
-          <StyledButton color="primary" variant="contained" type="submit">
+          {/* <StyledButton color="primary" variant="contained" type="submit">
           <Icon>done</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
-        </StyledButton>
+        </StyledButton> */}
+        <LoadingButton
+          type="submit"
+          color="primary"
+          loading={loading}
+          variant="contained"
+          sx={{ my: 2 }}
+        >
+          <Icon>done</Icon>
+          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
+        </LoadingButton>
         <StyledButton color="inherit" variant="contained" type="button" href="/users">
           <Icon>cancel</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Cancelar</Span>

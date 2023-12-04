@@ -246,10 +246,6 @@ const SimpleForm = () => {
             />
           </Grid>
         </Grid>
-          {/* <StyledButton color="primary" variant="contained" type="submit">
-          <Icon>done</Icon>
-          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
-        </StyledButton> */}
         <LoadingButton
           type="submit"
           color="primary"

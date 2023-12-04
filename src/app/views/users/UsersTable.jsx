@@ -1,4 +1,4 @@
-import { Fab, Icon, Card } from '@mui/material';
+import { Icon, Card, Button } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Breadcrumb } from "app/components";
 import UsersSummary from "./UsersSummary";
@@ -24,6 +24,10 @@ const CardTitle = styled('div')(({ subtitle }) => ({
   marginBottom: !subtitle && '16px',
 }));
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+}));
+
 const UsersTable = () => {
   return (
     <Container>
@@ -32,10 +36,14 @@ const UsersTable = () => {
       </Box>
 
       <CardRoot elevation={6}>
+      <CardTitle>
+        <StyledButton size="small" variant="contained" color="primary" href="/users/new">
+        <Icon>add</Icon>
+        Nuevo Usuario
+        </StyledButton>
+      </CardTitle>
+      
       <CardTitle>Lista de Usuarios 
-      <Fab size="small" color="primary" aria-label="Add" className="button" href="/users/new">
-          <Icon>add</Icon>
-        </Fab> 
       </CardTitle>
       <UsersSummary />
     </CardRoot>

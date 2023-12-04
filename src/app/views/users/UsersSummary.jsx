@@ -168,7 +168,7 @@ const deleteUser = async () => {
                   <IconButton
                   onClick={() => {
                      const funcion1 = handleClickOpen;
-                     const funcion2 = handleUserId(subscriber.id);
+                     handleUserId(subscriber.id);
                      funcion1();
                   }}
                   >
@@ -177,7 +177,7 @@ const deleteUser = async () => {
                   <IconButton 
                   onClick={() => {
                     const funcion1 = handleOpenDialogDelete;
-                    const funcion2 = handleUserId(subscriber.id);
+                    handleUserId(subscriber.id);
                     funcion1();
                  }}>
                     <Icon>delete</Icon>
