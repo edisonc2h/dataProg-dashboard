@@ -11,6 +11,7 @@ const textDark = {
   disabled: 'rgba(255, 255, 255, 0.64)',
   hint: 'rgba(255, 255, 255, 0.64)',
 };
+
 const errorColor = {
   main: '#FF3D57',
 };
@@ -39,25 +40,6 @@ export const themeColors = {
       type: 'dark',
       primary: {
         main: '#222A45',
-        contrastText: '#ffffff',
-      },
-      secondary: {
-        main: '#ff9e43',
-        contrastText: textLight.primary,
-      },
-      error: errorColor,
-      background: {
-        paper: '#222A45',
-        default: '#1a2038',
-      },
-      text: textDark,
-    },
-  },
-  slateDark2: {
-    palette: {
-      type: 'dark',
-      primary: {
-        main: '#1a2038',
         contrastText: '#ffffff',
       },
       secondary: {
@@ -110,15 +92,34 @@ export const themeColors = {
       text: textDark,
     },
   },
-  yellow: {
+  plomo: {
     palette: {
       type: 'dark',
       primary: {
-        main: '#FFAF38',
+        main: '#a19e9f',
         contrastText: '#ffffff',
       },
       secondary: {
-        main: '#FFAF38',
+        main: '#d62d34',
+        contrastText: textLight.primary,
+      },
+      error: errorColor,
+      background: {
+        paper: '#222A45',
+        default: '#1a2038',
+      },
+      text: textDark,
+    },
+  },
+  red: {
+    palette: {
+      type: 'dark',
+      primary: {
+        main: '#d62d34',
+        contrastText: '#ffffff',
+      },
+      secondary: {
+        main: '#d62d34',
         contrastText: textLight.primary,
       },
       error: errorColor,
