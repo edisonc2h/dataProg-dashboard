@@ -26,7 +26,7 @@ const ContentBox = styled(Box)(() => ({
 }));
 
 const JWTRoot = styled(JustifyBox)(() => ({
-  background: '#1A2038',
+  background: '#a19e9f',
   minHeight: '100% !important',
   '& .card': {
     maxWidth: 800,
