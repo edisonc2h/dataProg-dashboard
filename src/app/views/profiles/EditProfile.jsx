@@ -123,7 +123,7 @@ const SimpleForm = () => {
           <Icon>done</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
         </LoadingButton>
-        <StyledButton color="inherit" variant="contained" type="button" href="/users">
+        <StyledButton color="inherit" variant="contained" type="button" href="/profiles">
           <Icon>cancel</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Cancelar</Span>
         </StyledButton>
