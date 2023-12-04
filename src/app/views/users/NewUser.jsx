@@ -8,10 +8,17 @@ import {
 } from "@mui/material";
 import { Breadcrumb } from "app/components";
 import { Span } from "app/components/Typography";
-import { useEffect, useState } from "react";
+import { useEffect, useState, forwardRef } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from 'axios.js'
 import { useNavigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 const Container = styled("div")(({ theme }) => ({
     margin: "30px",
@@ -42,10 +49,12 @@ const AutoComplete = styled(Autocomplete)(() => ({
 
 const SimpleForm = () => {
   const [state, setState] = useState({ date: new Date(), status: 'Activo', portalDownload: 'No', consultingJudicialOrders: 'No'});
+  const [openMessage, setOpenMessage] = useState(false);
 
   const [status] = useState();
   const [portalDownload] = useState();
   const [consultingJudicialOrders] = useState();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,13 +66,15 @@ const SimpleForm = () => {
   }, [state.password]);
 
   const handleSubmit = async (values) => {
-    //setLoading(true);
+    setLoading(true);
     try {
         await axios.post('http://127.0.0.1/api/user', state)
+        setLoading(false);
+        setOpenMessage(true);
         navigate('/users');
     } catch (e) {
-      //setLoading(false);
-      //setOpenMessage(true);
+        console.log(e)
+        setLoading(false);
     }
   };
 
@@ -88,6 +99,13 @@ const SimpleForm = () => {
     if (newValue) {
         setState({ ...state, 'consultingJudicialOrders': newValue });
     }
+  };
+
+  const handleCloseMessage = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenMessage(false);
   };
 
   const {
@@ -156,6 +174,8 @@ const SimpleForm = () => {
               label="Institución Financiera"
               value={financialInstitution || ""}
               onChange={handleChange}
+              validators={["required"]}
+              errorMessages={["Campo obligatorio"]}
             />
 
           </Grid>
@@ -226,18 +246,30 @@ const SimpleForm = () => {
             />
           </Grid>
         </Grid>
-          <StyledButton color="primary" variant="contained" type="submit">
+          {/* <StyledButton color="primary" variant="contained" type="submit">
           <Icon>done</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
-        </StyledButton>
+        </StyledButton> */}
+        <LoadingButton
+          type="submit"
+          color="primary"
+          loading={loading}
+          variant="contained"
+          sx={{ my: 2 }}
+        >
+          <Icon>done</Icon>
+          <Span sx={{ pl: 1, textTransform: "capitalize" }}>Guardar</Span>
+        </LoadingButton>
         <StyledButton color="inherit" variant="contained" type="button" href="/users">
           <Icon>cancel</Icon>
           <Span sx={{ pl: 1, textTransform: "capitalize" }}>Cancelar</Span>
         </StyledButton>
-    
-
-       
       </ValidatorForm>
+            <Snackbar open={openMessage} vertical="top" horizontal="right" autoHideDuration={6000} onClose={handleCloseMessage}>
+            <Alert onClose={handleCloseMessage} severity="success" sx={{ width: '100%' }}>
+                Guardado con éxito!
+            </Alert>
+            </Snackbar>
       </Container>
   );
 };

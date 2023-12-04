@@ -39,10 +39,6 @@ const UsersTable = () => {
       </CardTitle>
       <UsersSummary />
     </CardRoot>
-
-      {/* <SimpleCard title="Lista de Usuarios">
-        <UsersSummary />
-      </SimpleCard> */}
     </Container>
   );
 };
