@@ -162,7 +162,7 @@ const SimpleForm = () => {
             <TextField
               name="password"
               type="password"
-              label="Password (Min length 8)"
+              label="Password (Mínimo 8)"
               value={password || ""}
               onChange={handleChange}
               validators={["required", "minStringLength: 8"]}

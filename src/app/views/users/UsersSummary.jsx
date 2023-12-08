@@ -116,6 +116,7 @@ const editPassword = async () => {
   try {
     await axios.patch('http://127.0.0.1/api/changeUserPassword/' +  userId, user)
     setLoading(false);
+    setOpen(false);
   } catch (e) {
     //setOpenMessage(true);
   }
@@ -213,7 +214,7 @@ const deleteUser = async () => {
             <TextField
               name="password"
               type="password"
-              label="Password (Min length 8)"
+              label="Password (Mínimo 8)"
               value={password || ""}
               onChange={handleChangePass}
               validators={["required", "minStringLength: 8"]}

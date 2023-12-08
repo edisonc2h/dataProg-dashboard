@@ -2,6 +2,7 @@ import { Icon, Card, Button } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Breadcrumb } from "app/components";
 import UsersSummary from "./UsersSummary";
+//import UsersTableData from './UsersTableData';
 
 const Container = styled("div")(({ theme }) => ({
   margin: "30px",
@@ -35,18 +36,11 @@ const UsersTable = () => {
         <Breadcrumb routeSegments={[{ name: "Listado", path: "/users" }, { name: "Usuarios" }]} />
       </Box>
 
-      <CardRoot elevation={6}>
-      <CardTitle>
-        <StyledButton size="small" variant="contained" color="primary" href="/users/new">
+      <StyledButton size="small" variant="contained" color="primary" href="/users/new">
         <Icon>add</Icon>
         Nuevo Usuario
         </StyledButton>
-      </CardTitle>
-      
-      <CardTitle>Lista de Usuarios 
-      </CardTitle>
-      <UsersSummary />
-    </CardRoot>
+      <UsersSummary/>
     </Container>
   );
 };
