@@ -3,7 +3,12 @@ import {
   Grid,
   Icon,
   styled,
-  Box
+  Box,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
 } from "@mui/material";
 import { Breadcrumb } from "app/components";
 import { Span } from "app/components/Typography";
@@ -12,6 +17,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import axios from 'axios.js'
 import { useNavigate, useParams } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
+import {menu_items} from 'app/menu';
  
 const Container = styled("div")(({ theme }) => ({
     margin: "30px",
@@ -36,16 +42,11 @@ const SimpleForm = () => {
   const {id} = useParams();
   const [state, setState] = useState({
     id: id,
-    username: '',
-    documentNumber: '',
-    name: '',
-    lastname: '',
-    email: '',
-    status: '',
-    financialInstitution: '',
-    portalDownload: '',
-    consultingJudicialOrders: ''
+    code: '',
+    description: ''
   });
+
+  const [menu, setMenu] = useState(menu_items);
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -53,8 +54,18 @@ const SimpleForm = () => {
   useEffect(() =>{
     axios.get('http://127.0.0.1/api/profile/' + id)
     .then(res => {
-      console.log(res)
       setState({...state, code: res.data.code, description: res.data.description});
+      if (res.data.menu) {
+        let menu =  menu_items.map((item, index) => {
+          Array.from(res.data.menu).forEach(function (itemSave) {
+            if (item.path === itemSave.path ) {
+              item.selected = itemSave.selected
+            }
+          });
+          return item;
+        });
+        setMenu(menu);
+      }
     })
     .catch()
   }, [])
@@ -62,6 +73,7 @@ const SimpleForm = () => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
+      state.menu = menu;
       console.log(state)
         await axios.put('http://127.0.0.1/api/profile/' + id, state)
         setLoading(false);
@@ -75,6 +87,11 @@ const SimpleForm = () => {
   const handleChange = (event) => {
     event.persist();
     setState({ ...state, [event.target.name]: event.target.value });
+  };
+
+  const handleChangeMenu = (item) => (event) => {
+    item.selected = event.target.checked
+    setMenu({ ...menu, item });
   };
 
   const {
@@ -111,6 +128,19 @@ const SimpleForm = () => {
               validators={["required"]}
               errorMessages={["Campo obligatorio"]}
             />
+          </Grid>
+          <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
+          <FormControl component="fieldset" className="formControl">
+            <FormLabel component="legend">Menú</FormLabel>
+            <FormGroup>
+                {menu_items.map((item, index) => (
+                <FormControlLabel
+                control={<Checkbox checked={item.selected} onChange={handleChangeMenu(item)} value="item" />}
+                label={item.name} key={index}
+                />
+              ))}
+            </FormGroup>
+          </FormControl>
           </Grid>
         </Grid>
         <LoadingButton
