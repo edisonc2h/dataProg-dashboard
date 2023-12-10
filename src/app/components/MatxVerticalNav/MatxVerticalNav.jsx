@@ -79,45 +79,15 @@ const MatxVerticalNav = ({ items }) => {
 
   const renderLevels = (data) => {
     return data.map((item, index) => {
-      if (item.type === 'label')
-        return (
-          <ListLabel key={index} mode={mode} className="sidenavHoverShow">
-            {item.label}
-          </ListLabel>
-        );
 
-      if (item.children) {
+      if (item.toMenu && item.show && item.children) {
         return (
           <MatxVerticalNavExpansionPanel mode={mode} item={item} key={index}>
             {renderLevels(item.children)}
           </MatxVerticalNavExpansionPanel>
         );
-      } else if (item.type === 'extLink') {
-        return (
-          <ExternalLink
-            key={index}
-            href={item.path}
-            className={`${mode === 'compact' && 'compactNavItem'}`}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <ButtonBase key={item.name} name="child" sx={{ width: '100%' }}>
-              {(() => {
-                if (item.icon) {
-                  return <Icon className="icon">{item.icon}</Icon>;
-                } else {
-                  return <span className="item-icon icon-text">{item.iconText}</span>;
-                }
-              })()}
-              <StyledText mode={mode} className="sidenavHoverShow">
-                {item.name}
-              </StyledText>
-              <Box mx="auto"></Box>
-              {item.badge && <BadgeValue>{item.badge.value}</BadgeValue>}
-            </ButtonBase>
-          </ExternalLink>
-        );
       } else {
+        if (item.toMenu && item.show) {
         return (
           <InternalLink key={index}>
             <NavLink
@@ -164,6 +134,7 @@ const MatxVerticalNav = ({ items }) => {
             </NavLink>
           </InternalLink>
         );
+        }
       }
     });
   };

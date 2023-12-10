@@ -46,6 +46,8 @@ const SimpleForm = () => {
     description: ''
   });
 
+  const menu_items_filtered = menu_items.filter(item => item.show)
+
   const [menu, setMenu] = useState(menu_items);
 
   const [loading, setLoading] = useState(false);
@@ -73,8 +75,24 @@ const SimpleForm = () => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      state.menu = menu;
-      console.log(state)
+      let menu_values = Object.values(menu)
+    let profileItem = menu_values.filter(item => item.path === '/profiles');
+    if (profileItem[0] && profileItem[0].selected) {
+      menu_values.forEach(function(val, key){
+          if (val.path === '/profiles/new') {
+            val.selected = true;
+          }
+      });
+    }
+    let userItem = menu_values.filter(item => item.path === '/users');
+    if (userItem[0] && userItem[0].selected) {
+      menu_values.forEach(function(val, key){
+          if (val.path === '/users/new') {
+            val.selected = true;
+          }
+      });
+    }
+    state.menu = menu_values;
         await axios.put('http://127.0.0.1/api/profile/' + id, state)
         setLoading(false);
         navigate('/profiles');
@@ -133,7 +151,7 @@ const SimpleForm = () => {
           <FormControl component="fieldset" className="formControl">
             <FormLabel component="legend">Menú</FormLabel>
             <FormGroup>
-                {menu_items.map((item, index) => (
+                {menu_items_filtered.map((item, index) => (
                 <FormControlLabel
                 control={<Checkbox checked={item.selected} onChange={handleChangeMenu(item)} value="item" />}
                 label={item.name} key={index}

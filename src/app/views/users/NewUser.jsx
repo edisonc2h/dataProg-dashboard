@@ -4,7 +4,8 @@ import {
   Grid,
   Icon,
   styled,
-  Box
+  Box,
+  CircularProgress
 } from "@mui/material";
 import { Breadcrumb } from "app/components";
 import { Span } from "app/components/Typography";
@@ -55,6 +56,9 @@ const SimpleForm = () => {
   const [portalDownload] = useState();
   const [consultingJudicialOrders] = useState();
   const [loading, setLoading] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [profiles, setProfiles] = useState([]);
+  const loadingProfiles = openProfile && profiles.length === 0;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -101,6 +105,12 @@ const SimpleForm = () => {
     }
   };
 
+  const handleChangeProfile = (newValue) => {
+    if (newValue) {
+        setState({ ...state, 'profile_id': newValue.id });
+    }
+  };
+
   const handleCloseMessage = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -119,6 +129,31 @@ const SimpleForm = () => {
     email
   } = state;
 
+  useEffect(() => {
+    let active = true;
+
+    if (!loadingProfiles) {
+      return undefined;
+    }
+
+    (async () => {
+      const response = await axios.get('http://127.0.0.1/api/profiles')
+      if (active) {
+        setProfiles(response.data?.data)
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, [loadingProfiles]);
+
+  useEffect(() => {
+    if (!openProfile) {
+      setProfiles([]);
+    }
+  }, [openProfile]);
+
   return (
     <Container>
 
@@ -136,8 +171,18 @@ const SimpleForm = () => {
               value={username || ""}
               onChange={handleChange}
               errorMessages={["Campo obligatorio"]}
-              label="Login (Min length 4, Max length 15)"
+              label="Usuario (Min 4, Max 15)"
               validators={["required", "minStringLength: 4", "maxStringLength: 15"]}
+            />
+
+            <TextField
+              type="text"
+              name="documentNumber"
+              label="Número Documento"
+              onChange={handleChange}
+              value={documentNumber || ""}
+              validators={["required"]}
+              errorMessages={["Campo obligatorio"]}
             />
 
             <TextField
@@ -146,6 +191,15 @@ const SimpleForm = () => {
               label="Nombre"
               onChange={handleChange}
               value={name || ""}
+              validators={["required"]}
+              errorMessages={["Campo obligatorio"]}
+            />
+            <TextField
+              type="text"
+              name="lastname"
+              label="Apellido"
+              onChange={handleChange}
+              value={lastname || ""}
               validators={["required"]}
               errorMessages={["Campo obligatorio"]}
             />
@@ -160,15 +214,6 @@ const SimpleForm = () => {
               errorMessages={["Campo obligatorio", "email no válido"]}
             />
             <TextField
-              name="password"
-              type="password"
-              label="Password (Mínimo 8)"
-              value={password || ""}
-              onChange={handleChange}
-              validators={["required", "minStringLength: 8"]}
-              errorMessages={["Campo obligatorio"]}
-            />
-            <TextField
               name="financialInstitution"
               type="text"
               label="Institución Financiera"
@@ -181,24 +226,7 @@ const SimpleForm = () => {
           </Grid>
 
           <Grid item lg={6} md={6} sm={12} xs={12} sx={{ mt: 2 }}>
-          <TextField
-              type="text"
-              name="documentNumber"
-              label="Número Documento"
-              onChange={handleChange}
-              value={documentNumber || ""}
-              validators={["required"]}
-              errorMessages={["Campo obligatorio"]}
-            />
-            <TextField
-              type="text"
-              name="lastname"
-              label="Apellido"
-              onChange={handleChange}
-              value={lastname || ""}
-              validators={["required"]}
-              errorMessages={["Campo obligatorio"]}
-            />
+        
             <AutoComplete
             name="status"
             id="status"
@@ -210,6 +238,16 @@ const SimpleForm = () => {
             renderInput={(params) => (
             <TextField {...params} label="Estado" variant="outlined" fullWidth />
             )}
+            />
+
+            <TextField
+              name="password"
+              type="password"
+              label="Password (Mínimo 8)"
+              value={password || ""}
+              onChange={handleChange}
+              validators={["required", "minStringLength: 8"]}
+              errorMessages={["Campo obligatorio"]}
             />
             
             <TextField
@@ -243,6 +281,36 @@ const SimpleForm = () => {
             renderInput={(params) => (
             <TextField {...params} label="Consulta de Providencias Judiciales" variant="outlined" fullWidth />
             )}
+            />
+            <AutoComplete
+              open={openProfile}
+              options={profiles}
+              loading={loadingProfiles}
+              id="profile"
+              onOpen={() => setOpenProfile(true)}
+              onClose={() => setOpenProfile(false)}
+              onChange={(event, newValue) => {
+                handleChangeProfile(newValue);
+              }}
+              isOptionEqualToValue={(option, value) => option.description === value.description}
+              getOptionLabel={(option) => option.description}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  fullWidth
+                  variant="outlined"
+                  label="Perfil"
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loadingProfiles ? <CircularProgress color="inherit" size={20} /> : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
+                />
+              )}
             />
           </Grid>
         </Grid>
